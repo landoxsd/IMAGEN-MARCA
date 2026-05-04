@@ -4,7 +4,13 @@ import os
 def remove_white_background(img, threshold=235):
     """
     Convierte los píxeles blancos o casi blancos del fondo de una imagen en transparentes.
-    El threshold (0-255) determina qué tan blanco debe ser para hacerse transparente.
+    
+    Args:
+        img (PIL.Image): La imagen original (logo).
+        threshold (int): Valor de 0-255. Píxeles con R, G y B mayores a este valor se harán transparentes.
+    
+    Returns:
+        PIL.Image: Imagen en formato RGBA con fondo transparente y recortada a su contenido visible.
     """
     img = img.convert("RGBA")
     data = img.getdata()
@@ -27,8 +33,14 @@ def remove_white_background(img, threshold=235):
 
 def process_image(product_path, logo_path, output_path, target_size=(1500, 1500), logo_width_ratio=0.25, logo_x_center=750, logo_y=30):
     """
-    Procesa una imagen de producto: la centra en un lienzo de target_size,
-    y coloca el logo según los parámetros recibidos.
+    Realiza el flujo completo de procesamiento para una imagen de producto.
+    
+    Flujo:
+    1. Crea lienzo blanco de 1500x1500px.
+    2. Procesa el logo (quita fondo, escala y recorta).
+    3. Redimensiona el producto para que encaje manteniendo proporción.
+    4. Compone la imagen final pegando producto y luego el logo (capa superior).
+    5. Guarda el resultado en disco.
     """
     try:
         # 1. Crear el lienzo blanco

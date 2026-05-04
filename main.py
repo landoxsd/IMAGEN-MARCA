@@ -9,6 +9,11 @@ ctk.set_appearance_mode("dark")
 ctk.set_default_color_theme("blue")
 
 class App(ctk.CTk):
+    """
+    Clase principal de la aplicación.
+    Gestiona la interfaz de usuario, la carga de archivos, la navegación de previews
+    y el procesamiento por lotes en segundo plano (threading).
+    """
     def __init__(self):
         super().__init__()
 
@@ -121,8 +126,10 @@ class App(ctk.CTk):
             self.btn_process.configure(state="disabled")
 
     def update_preview(self):
-        if not self.folder_path or not self.logo_path or not self.image_list:
-            return
+        """
+        Actualiza el panel de vista previa central. 
+        Lee los valores actuales de los sliders y genera la imagen compuesta.
+        """
 
         img_name = self.image_list[self.current_preview_index]
         img_path = os.path.join(self.folder_path, img_name)
